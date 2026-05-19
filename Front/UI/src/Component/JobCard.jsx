@@ -1,4 +1,21 @@
-function JobCard({ job }) {
+import { deleteJob } from "../services/jobService";
+
+function JobCard({ job, fetchJobs }) {
+
+    const handleDelete = async () => {
+
+        try {
+
+            await deleteJob(job.id);
+
+            fetchJobs();
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+    };
 
     return (
         <div
@@ -24,6 +41,11 @@ function JobCard({ job }) {
             </p>
 
             <p>{job.description}</p>
+
+            <button onClick={handleDelete}>
+                Delete Job
+            </button>
+
         </div>
     );
 }

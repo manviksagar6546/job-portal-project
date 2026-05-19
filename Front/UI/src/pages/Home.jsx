@@ -3,28 +3,46 @@ import { getJobs } from "../services/jobService";
 import JobCard from "../Component/JobCard";
 
 function Home() {
+
   const [jobs, setJobs] = useState([]);
 
+  // MOVE OUTSIDE useEffect
+  const fetchJobs = async () => {
+
+    try {
+
+      const response = await getJobs();
+
+      setJobs(response.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+  };
+
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await getJobs();
-        setJobs(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     void fetchJobs();
+
   }, []);
 
   return (
     <div style={{ padding: "20px" }}>
+
       <h1>Available Jobs</h1>
 
       {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
+
+        <JobCard
+          key={job.id}
+          job={job}
+          fetchJobs={fetchJobs}
+        />
+
       ))}
+
     </div>
   );
 }
