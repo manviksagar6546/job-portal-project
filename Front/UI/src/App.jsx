@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Component/Navbar";
 import Home from "./pages/Home";
 import AddJob from "./pages/AddJob";
+import ApplyJob from "./pages/ApplyJob";
+import ViewApplicants from "./pages/ViewApplicants";
 
 function App() {
   return (
@@ -13,6 +15,10 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/add-job" element={<AddJob />} />
+
+        <Route path="/apply/:jobId" element={<ApplyJob />} />
+
+        <Route path="/applications/:jobId" element={<ViewApplicants />} />
       </Routes>
     </BrowserRouter>
   );

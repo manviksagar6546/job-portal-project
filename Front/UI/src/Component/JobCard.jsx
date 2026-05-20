@@ -1,53 +1,58 @@
 import { deleteJob } from "../services/jobService";
-
+import { Link } from "react-router-dom";
 function JobCard({ job, fetchJobs }) {
+  const handleDelete = async () => {
+    try {
+      await deleteJob(job.id);
 
-    const handleDelete = async () => {
+      fetchJobs();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        try {
+  return (
+    <div
+      style={{
+        border: "1px solid gray",
+        padding: "15px",
+        marginBottom: "15px",
+        borderRadius: "10px",
+      }}
+    >
+      <h2>{job.title}</h2>
 
-            await deleteJob(job.id);
+      <p>
+        <b>Company:</b> {job.company}
+      </p>
 
-            fetchJobs();
+      <p>
+        <b>Location:</b> {job.location}
+      </p>
 
-        } catch (error) {
+      <p>
+        <b>Salary:</b> ₹{job.salary}
+      </p>
 
-            console.log(error);
+      <p>{job.description}</p>
 
-        }
-    };
+      <button onClick={handleDelete}>Delete Job</button>
 
-    return (
-        <div
-            style={{
-                border: "1px solid gray",
-                padding: "15px",
-                marginBottom: "15px",
-                borderRadius: "10px"
-            }}
-        >
-            <h2>{job.title}</h2>
+      <br />
+      <br />
 
-            <p>
-                <b>Company:</b> {job.company}
-            </p>
+      <Link to={`/apply/${job.id}`}>
+        <button>Apply</button>
+      </Link>
 
-            <p>
-                <b>Location:</b> {job.location}
-            </p>
+      <br />
+      <br />
 
-            <p>
-                <b>Salary:</b> ₹{job.salary}
-            </p>
-
-            <p>{job.description}</p>
-
-            <button onClick={handleDelete}>
-                Delete Job
-            </button>
-
-        </div>
-    );
+      <Link to={`/applications/${job.id}`}>
+        <button>View Applicants</button>
+      </Link>
+    </div>
+  );
 }
 
 export default JobCard;
