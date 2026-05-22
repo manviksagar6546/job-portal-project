@@ -1,5 +1,6 @@
 package com.jobportal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,8 @@ public class Application {
 
     private String applicantEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "job_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id", nullable = false)
+    @JsonIgnore
     private Job job;
 }

@@ -1,108 +1,130 @@
 import { useState } from "react";
 import axios from "axios";
+import "./addjob.scss";
 
 function AddJob() {
+  const [job, setJob] = useState({
+    title: "",
+    company: "",
+    location: "",
+    salary: "",
+    description: "",
+  });
 
-    const [job, setJob] = useState({
+  const handleChange = (e) => {
+    setJob({
+      ...job,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post(
+        "http://localhost:8080/api/jobs",
+        job
+      );
+
+      alert("Job Added");
+
+      setJob({
         title: "",
         company: "",
         location: "",
         salary: "",
-        description: ""
-    });
+        description: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const handleChange = (e) => {
-        setJob({
-            ...job,
-            [e.target.name]: e.target.value
-        });
-    };
+  return (
+    <section className="addjob">
+      <div className="addjob__container">
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+        <div className="addjob__header">
+          <span>Add Opportunity</span>
 
-        try {
-            await axios.post(
-                "http://localhost:8080/api/jobs",
-                job
-            );
+          <h1>Create New Job</h1>
 
-            alert("Job Added");
-
-            setJob({
-                title: "",
-                company: "",
-                location: "",
-                salary: "",
-                description: ""
-            });
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    return (
-        <div style={{ padding: "20px" }}>
-            <h1>Add Job</h1>
-
-            <form onSubmit={handleSubmit}>
-
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Job Title"
-                    value={job.title}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    type="text"
-                    name="company"
-                    placeholder="Company"
-                    value={job.company}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    type="text"
-                    name="location"
-                    placeholder="Location"
-                    value={job.location}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    type="number"
-                    name="salary"
-                    placeholder="Salary"
-                    value={job.salary}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <textarea
-                    name="description"
-                    placeholder="Description"
-                    value={job.description}
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <button type="submit">
-                    Add Job
-                </button>
-            </form>
+          <p>
+            Publish jobs and connect with talented developers.
+          </p>
         </div>
-    );
+
+        <form
+          className="addjob__form"
+          onSubmit={handleSubmit}
+        >
+          <div className="form__group">
+            <label>Job Title</label>
+
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter job title"
+              value={job.title}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form__group">
+            <label>Company</label>
+
+            <input
+              type="text"
+              name="company"
+              placeholder="Enter company name"
+              value={job.company}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form__group">
+            <label>Location</label>
+
+            <input
+              type="text"
+              name="location"
+              placeholder="Enter location"
+              value={job.location}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form__group">
+            <label>Salary</label>
+
+            <input
+              type="number"
+              name="salary"
+              placeholder="Enter salary"
+              value={job.salary}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form__group">
+            <label>Description</label>
+
+            <textarea
+              name="description"
+              placeholder="Write job description..."
+              value={job.description}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button type="submit">
+            Add Job
+          </button>
+        </form>
+      </div>
+    </section>
+  );
 }
 
 export default AddJob;

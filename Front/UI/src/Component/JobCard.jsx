@@ -1,10 +1,11 @@
 import { deleteJob } from "../services/jobService";
 import { Link } from "react-router-dom";
+import "./jobcard.scss";
+
 function JobCard({ job, fetchJobs }) {
   const handleDelete = async () => {
     try {
       await deleteJob(job.id);
-
       fetchJobs();
     } catch (error) {
       console.log(error);
@@ -12,45 +13,49 @@ function JobCard({ job, fetchJobs }) {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid gray",
-        padding: "15px",
-        marginBottom: "15px",
-        borderRadius: "10px",
-      }}
-    >
-      <h2>{job.title}</h2>
+    <div className="job__card">
+      <div className="job__top">
+        <h2>{job.title}</h2>
 
-      <p>
-        <b>Company:</b> {job.company}
+        <span className="job__badge">
+          {job.company}
+        </span>
+      </div>
+
+      <div className="job__details">
+        <p>
+          <strong>Location:</strong> {job.location}
+        </p>
+
+        <p>
+          <strong>Salary:</strong> ₹{job.salary}
+        </p>
+      </div>
+
+      <p className="job__description">
+        {job.description}
       </p>
 
-      <p>
-        <b>Location:</b> {job.location}
-      </p>
+      <div className="job__actions">
+        <button
+          className="delete__btn"
+          onClick={handleDelete}
+        >
+          Delete Job
+        </button>
 
-      <p>
-        <b>Salary:</b> ₹{job.salary}
-      </p>
+        <Link to={`/apply/${job.id}`}>
+          <button className="apply__btn">
+            Apply
+          </button>
+        </Link>
 
-      <p>{job.description}</p>
-
-      <button onClick={handleDelete}>Delete Job</button>
-
-      <br />
-      <br />
-
-      <Link to={`/apply/${job.id}`}>
-        <button>Apply</button>
-      </Link>
-
-      <br />
-      <br />
-
-      <Link to={`/applications/${job.id}`}>
-        <button>View Applicants</button>
-      </Link>
+        <Link to={`/applications/${job.id}`}>
+          <button className="view__btn">
+            View Applicants
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

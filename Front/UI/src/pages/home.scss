@@ -1,0 +1,145 @@
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 7rem 4rem 4rem;
+
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.2), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.18), transparent 35%),
+    linear-gradient(135deg, #040130 0%, #0f172a 100%);
+
+  overflow: hidden;
+}
+
+.home__container {
+  width: 100%;
+}
+
+.home__header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.home__tag {
+  display: inline-block;
+
+  padding: 0.7rem 1.5rem;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+
+  margin-bottom: 2rem;
+
+  backdrop-filter: blur(10px);
+}
+
+.home__title {
+  font-size: clamp(3rem, 8vw, 6rem);
+
+  font-weight: 800;
+
+  line-height: 1.05;
+
+  color: white;
+
+  margin-bottom: 1.5rem;
+
+  span {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.home__subtitle {
+  max-width: 700px;
+
+  margin: auto;
+
+  color: #94a3b8;
+
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+}
+
+.jobs__grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+
+  gap: 2rem;
+}
+
+/* Loader */
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 5rem 0;
+
+  color: white;
+}
+
+.loader__circle {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #3b82f6;
+
+  animation: spin 1s linear infinite;
+
+  margin-bottom: 1rem;
+}
+
+.empty__state {
+  text-align: center;
+  padding: 4rem;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: white;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    padding: 6rem 1.5rem 2rem;
+  }
+
+  .home__title {
+    font-size: 3rem;
+  }
+
+  .jobs__grid {
+    grid-template-columns: 1fr;
+  }
+}

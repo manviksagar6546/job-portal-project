@@ -1,0 +1,116 @@
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+  padding: 1rem 4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+  animation: navbarFade 0.7s ease;
+}
+
+nav a {
+  position: relative;
+
+  color: #f8fafc;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+
+  transition: all 0.3s ease;
+
+  overflow: hidden;
+}
+
+nav a::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, 0.2),
+    rgba(129, 140, 248, 0.2)
+  );
+
+  opacity: 0;
+  transition: 0.3s ease;
+  border-radius: inherit;
+}
+
+nav a:hover::before {
+  opacity: 1;
+}
+
+nav a:hover {
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+nav a::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+
+  width: 0%;
+  height: 2px;
+
+  background: linear-gradient(to right, #38bdf8, #818cf8);
+
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav a:hover::after {
+  width: 70%;
+}
+
+/* Active link effect */
+nav a.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #38bdf8;
+}
+
+/* Navbar animation */
+@keyframes navbarFade {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+  }
+}

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -25,4 +27,7 @@ public class Job {
 
     @Column(length = 2000)
     private String description;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL,  orphanRemoval = true)
+    private List<Application> applications;
 }
