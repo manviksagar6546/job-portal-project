@@ -1,5 +1,5 @@
 Video explanation:
-<video src=" https://github.com/user-attachments/assets/a76ddc5d-d608-4fdd-b91a-c17b408dab08" controls width="700"></video>
+<video src=" https://github.com/user-attachments/assets/a76ddc5d-d608-4fdd-b91a-c17b408dab08" controls width="700"> video explanation </video>
 
 # job-portal-project
 Basic UI - using Reactjs and full backend setup using - java springboot and Using SQL for Database
