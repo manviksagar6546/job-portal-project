@@ -1,3 +1,6 @@
+Video explanation:
+https://github.com/user-attachments/assets/a76ddc5d-d608-4fdd-b91a-c17b408dab08
+
 # job-portal-project
 Basic UI - using Reactjs and full backend setup using - java springboot and Using SQL for Database
 
