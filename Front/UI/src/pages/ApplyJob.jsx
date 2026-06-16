@@ -1,91 +1,67 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./applyjob.scss";
 
 function ApplyJob() {
   const { jobId } = useParams();
+  const navigate = useNavigate();
 
-  const [application, setApplication] = useState({
-    applicantName: "",
-    applicantEmail: "",
-  });
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleChange = (e) => {
-    setApplication({
-      ...application,
-      [e.target.name]: e.target.value,
-    });
-  };
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (user.role !== "ROLE_USER") {
+      navigate("/");
+    }
+  }, [navigate, user]);
 
+  const handleApply = async () => {
     try {
       await axios.post(
-        `http://localhost:8080/api/applications/${jobId}`,
-        application
+        `http://localhost:8080/api/applications/${jobId}/${user.id}`,
       );
 
-      alert("Application Submitted");
+      alert("Application Submitted Successfully");
 
-      setApplication({
-        applicantName: "",
-        applicantEmail: "",
-      });
+      navigate("/");
     } catch (error) {
       console.log(error);
 
-      alert("Error");
+      alert("Failed To Apply");
     }
   };
 
   return (
     <section className="applyjob">
       <div className="applyjob__container">
-
         <div className="applyjob__header">
           <span>Career Portal</span>
 
           <h1>Apply For Job</h1>
 
-          <p>
-            Submit your application and connect with top companies.
-          </p>
+          <p>Submit your application for this opportunity.</p>
         </div>
 
-        <form
-          className="applyjob__form"
-          onSubmit={handleSubmit}
-        >
+        <div className="applyjob__form">
           <div className="form__group">
-            <label>Full Name</label>
+            <label>Name</label>
 
-            <input
-              type="text"
-              name="applicantName"
-              placeholder="Enter your name"
-              value={application.applicantName}
-              onChange={handleChange}
-            />
+            <input type="text" value={user?.name || ""} disabled />
           </div>
 
           <div className="form__group">
-            <label>Email Address</label>
+            <label>Email</label>
 
-            <input
-              type="email"
-              name="applicantEmail"
-              placeholder="Enter your email"
-              value={application.applicantEmail}
-              onChange={handleChange}
-            />
+            <input type="email" value={user?.email || ""} disabled />
           </div>
 
-          <button type="submit">
-            Apply Now
-          </button>
-        </form>
+          <button onClick={handleApply}>Apply Now</button>
+        </div>
       </div>
     </section>
   );

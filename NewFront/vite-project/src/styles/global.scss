@@ -1,0 +1,22 @@
+@use "./variables" as *;
+
+body {
+  background: $light-bg;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+.card {
+  border-radius: 12px;
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.btn {
+  border-radius: 8px;
+}

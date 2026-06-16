@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class ApplicationController {
 
     private final ApplicationService applicationService;
@@ -27,6 +27,11 @@ public class ApplicationController {
 
         return applicationService
                 .applyJob(application, jobId);
+    }
+
+    @GetMapping
+    public List<Application> getAllApplications() {
+        return applicationService.getAllApplications();
     }
 
     @GetMapping("/job/{jobId}")

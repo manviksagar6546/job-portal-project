@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./addjob.scss";
 
 function AddJob() {
+  const navigate = useNavigate();
+
   const [job, setJob] = useState({
     title: "",
     company: "",
@@ -10,6 +13,14 @@ function AddJob() {
     salary: "",
     description: "",
   });
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user || user.role !== "ROLE_ADMIN") {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setJob({
@@ -22,12 +33,9 @@ function AddJob() {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "http://localhost:8080/api/jobs",
-        job
-      );
+      await axios.post("http://localhost:8080/api/jobs", job);
 
-      alert("Job Added");
+      alert("Job Added Successfully");
 
       setJob({
         title: "",
@@ -36,29 +44,27 @@ function AddJob() {
         salary: "",
         description: "",
       });
+
+      navigate("/");
     } catch (error) {
       console.log(error);
+
+      alert("Failed To Add Job");
     }
   };
 
   return (
     <section className="addjob">
       <div className="addjob__container">
-
         <div className="addjob__header">
           <span>Add Opportunity</span>
 
           <h1>Create New Job</h1>
 
-          <p>
-            Publish jobs and connect with talented developers.
-          </p>
+          <p>Publish jobs and connect with talented developers.</p>
         </div>
 
-        <form
-          className="addjob__form"
-          onSubmit={handleSubmit}
-        >
+        <form className="addjob__form" onSubmit={handleSubmit}>
           <div className="form__group">
             <label>Job Title</label>
 
@@ -68,6 +74,7 @@ function AddJob() {
               placeholder="Enter job title"
               value={job.title}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -80,6 +87,7 @@ function AddJob() {
               placeholder="Enter company name"
               value={job.company}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -92,6 +100,7 @@ function AddJob() {
               placeholder="Enter location"
               value={job.location}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -104,6 +113,7 @@ function AddJob() {
               placeholder="Enter salary"
               value={job.salary}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -115,12 +125,11 @@ function AddJob() {
               placeholder="Write job description..."
               value={job.description}
               onChange={handleChange}
+              required
             />
           </div>
 
-          <button type="submit">
-            Add Job
-          </button>
+          <button type="submit">Add Job</button>
         </form>
       </div>
     </section>

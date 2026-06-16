@@ -6,6 +6,7 @@ import com.jobportal.repository.ApplicationRepository;
 import com.jobportal.repository.JobRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,8 @@ public class ApplicationService {
                 .orElseThrow();
 
         application.setJob(job);
+        application.setStatus("Applied");
+        application.setAppliedAt(LocalDateTime.now());
 
         return applicationRepository.save(application);
     }
@@ -42,5 +45,8 @@ public class ApplicationService {
 
         return applicationRepository
                 .findByJobId(jobId);
+    }
+    public List<Application> getAllApplications() {
+        return applicationRepository.findAll();
     }
 }

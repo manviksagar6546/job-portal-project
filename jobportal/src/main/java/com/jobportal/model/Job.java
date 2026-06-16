@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,13 @@ public class Job {
 
     @Column(length = 2000)
     private String description;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<Application> applications;

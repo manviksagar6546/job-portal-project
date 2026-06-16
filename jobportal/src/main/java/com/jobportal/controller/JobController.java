@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class JobController {
 
     private final JobService jobService;
@@ -25,6 +25,18 @@ public class JobController {
     @GetMapping
     public List<Job> getJobs() {
         return jobService.getAllJobs();
+    }
+
+    @GetMapping("/search")
+    public List<Job> searchJobs(
+            @RequestParam String keyword) {
+
+        return jobService.searchJobs(keyword);
+    }
+
+    @GetMapping("/{id}")
+    public Job getJobById(@PathVariable Long id){
+        return jobService.findById(id);
     }
 
     @DeleteMapping("/{id}")
